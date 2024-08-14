@@ -6,7 +6,34 @@
     <title>نمایش فایل متنی</title>
 </head>
 <body>
-    <h1>نمایش فایل متنی</h1>
-    <iframe src="hshshdbdi.iapp.ir/robots.txt" width="600" height="400"></iframe>
+    <h1>ss</h1>
+<script>
+    const url = 'http://hshshdbdi.iapp.ir/robots.txt'; // URL فایل مورد نظر
+
+// با استفاده از Fetch API فایل را دانلود می‌کنیم
+fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('خطا در دانلود فایل.');
+        }
+        return response.blob(); // تبدیل پاسخ به Blob
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob); // ایجاد URL برای Blob
+        const a = document.createElement('a'); // ایجاد عنصر <a>
+        a.href = url; // تنظیم URL به href عنصر <a>
+        a.download = 'file.txt'; // نام فایل ذخیره شده
+        document.body.appendChild(a); // افزودن عنصر <a> به بدنه
+        a.click(); // شبیه‌سازی کلیک روی عنصر <a>
+        a.remove(); // حذف عنصر <a> از بدنه
+        window.URL.revokeObjectURL(url); // آزاد کردن URL Blob
+        console.log('فایل با موفقیت دانلود و ذخیره شد!');
+    })
+    .catch(error => {
+        console.error(error.message); // چاپ خطا در صورت بروز
+    });
+    
+</script>
+
 </body>
 </html>
